@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Db } from '../../app/db/Db';
 import { LeadPage } from '../lead/lead';
-import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -15,7 +14,7 @@ export class NewGamePage {
   items: Array<any>;
   currentBride : any;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db, private events : Events) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db) {
     if (this.currentBride == null){
       this.gameNameDialog();
       this.items = [];
@@ -24,9 +23,7 @@ export class NewGamePage {
       this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
     }
   }
-  ionViewWillUnload() {
-    this.events.unsubscribe('lead');
-  }
+
   ionViewDidEnter(){
     if (this.currentBride != null){
       this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);

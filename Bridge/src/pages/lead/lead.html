@@ -30,8 +30,16 @@
     <ion-toggle [(ngModel)] = "isDouble"></ion-toggle>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>Trick Win Opposit</ion-label>
-    <ion-input type="number" [(ngModel)] = "trickNumber"></ion-input>
+    <ion-label color="primary" floating>Call Trick</ion-label>
+    <ion-input type="number" [(ngModel)]="callTrickNumber"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>Opposit Trick</ion-label>
+    <ion-input type="number" [(ngModel)] = "oppositTrick"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>Honers</ion-label>
+    <ion-input type="number" [(ngModel)]="honers"></ion-input>
   </ion-item>
   <button ion-button full (click) = "onLeadOkClick($event)">Ok</button>
 </ion-content>
