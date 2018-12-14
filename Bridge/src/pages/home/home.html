@@ -14,9 +14,6 @@
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="onLeadItemClick($event, item)">
       {{item.call}}
-      <div class="item-note" item-end>
-        {{item.wePoint}}
-      </div>
     </button>
   </ion-list>
   

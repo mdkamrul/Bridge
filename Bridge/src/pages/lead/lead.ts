@@ -23,6 +23,9 @@ export class LeadPage {
   honers = null;
   lsPoint = null;
   gsPoint = null;
+  leadNumber = 1;
+
+  bridgeLeadList = [];
 
   lead : any;
 
@@ -32,6 +35,8 @@ export class LeadPage {
     this.currentBride = this.navParams.get('currentBride');
     console.log(this.currentBride);
     this.lead = {};
+    this.bridgeLeadList = this.db.getBridgLeadList(this.currentBride.bridgeId);
+    this.leadNumber = this.bridgeLeadList.length + 1;
   }
 
   onLeadOkClick($event){
@@ -75,7 +80,8 @@ export class LeadPage {
       bridgePoint : null,
       callTrickNumber: parseInt(this.callTrickNumber),
       shortPoint : null,
-      play : null
+      play : null,
+      leadNumber : this.leadNumber
     };
     this.calculateLead();
     this.lead.bridgeId = this.currentBride.bridgeId;
