@@ -24,6 +24,7 @@ export class ListPage {
     this.items.push(this.storage.get("1")); */
 
     this.items = this.db.bridgeList;
+    console.log(this.db.bridgeList);
   }
 
   itemTapped(event, item) {

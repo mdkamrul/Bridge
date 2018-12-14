@@ -13,15 +13,31 @@ export class Db{
      bridgeList = [];
      leadMap = new Map();
 
-    public addBridge(bridge){
+     playingBrige = null;
+
+      private nextBridgeId = 0;
+
+      getNextBridgeId(){
+         if(this.bridgeList.length  == 0){
+             this.nextBridgeId  = 1;
+         }
+         return this.nextBridgeId;
+     }
+
+     addBridge(bridge){
         this.bridgeList.push(bridge);
+        this.nextBridgeId +=1;
     }
 
-    public getBridgLead(key){
-        return this.leadMap.get(key);
+     getBridgLeadList(key){
+         var leadList = this.leadMap.get(key);
+         if(leadList == null){
+             leadList = [];
+         }
+         return leadList;
     }
 
-    public setValueToLeadMap(key, value){
+     setValueToLeadMap(key, value){
         this.leadMap.set(key, value);
     }
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Db } from '../../app/db/Db';
-import { SQLiteObject } from '@ionic-native/sqlite';
 
 @Component({
   selector: 'page-home',
@@ -12,12 +11,18 @@ export class HomePage {
 
   gameName = '';
   items: Array<any>;
-
-  query: SQLiteObject;
+  currentBride = null;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db) {
-    this.gameNameDialog();
-    this.items = [];
+    if (this.currentBride == null){
+      this.gameNameDialog();
+      this.items = [];
+    }
+    else{
+      this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
+    }
+    
+    
   }
 
   onNewLeadClick(){
@@ -63,8 +68,9 @@ export class HomePage {
           text: 'Ok',
           handler: data => {
             this.items.push(data);
-            this.query.transaction((tx : any)=>{
-            });
+            this.db.setValueToLeadMap(this.currentBride.bridgeId, data);
+            console.log(this.db.getBridgLeadList(this.currentBride.bridgeId));
+            this.items.push(data);
           }
         }
       ]
@@ -93,8 +99,12 @@ export class HomePage {
           text: 'Ok',
           handler: data => {
             data.startTime = new Date();
+            data.bridgeId = this.db.getNextBridgeId();
             this.gameName = data.gameName;
             this.db.bridgeList.push(data);
+            this.currentBride = data;
+            this.db.playingBrige = data;
+            console.log(data);
           }
         }
       ]
