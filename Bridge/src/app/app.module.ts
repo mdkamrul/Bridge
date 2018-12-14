@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { NewGamePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -12,12 +12,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
 import { Db } from './db/Db';
+import { LeadPage } from '../pages/lead/lead';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage
+    NewGamePage,
+    ListPage,
+    LeadPage
   ],
   imports: [
     BrowserModule,
@@ -30,8 +32,9 @@ import { Db } from './db/Db';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage
+    NewGamePage,
+    ListPage,
+    LeadPage
   ],
   providers: [
     StatusBar,

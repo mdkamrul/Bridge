@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Db } from '../../app/db/Db';
+import { LeadPage } from '../lead/lead';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class NewGamePage {
 
   gameName = '';
   items: Array<any>;
@@ -26,19 +27,21 @@ export class HomePage {
   }
 
   onNewLeadClick(){
-    console.log("work");
-    this.newLeadDialog();
+    this.navCtrl.push(LeadPage,{
+      currentBride: this.currentBride
+    });
+    //this.newLeadDialog();
   }
 
   onGameResultBtnClick(){
-
+    this.showResult();
   }
 
   onLeadItemClick($event, item){
     console.log(item);
   }
 
-  newLeadDialog(){
+  showResult(){
     let leadNumber = this.items.length + 1;
     let alert = this.alertCtrl.create({
       title: 'Lead Number : ' + leadNumber,
@@ -49,7 +52,15 @@ export class HomePage {
         },
         {
           name : 'call',
-          placeholder : "Call"
+          label : 'Call',
+          type: 'radio',
+          value : '8'
+        },
+        {
+          name: 'call',
+          label: 'Call',
+          type: 'radio',
+          value : '9'
         },
         {
           name: 'wePoint',
