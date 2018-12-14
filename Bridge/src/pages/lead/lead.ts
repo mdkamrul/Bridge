@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Db } from '../../app/db/Db';
 
@@ -25,7 +25,7 @@ export class LeadPage {
   lead : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private storage: Storage, private db: Db) {
+    private storage: Storage, private db: Db, private alertCtrl: AlertController) {
 
     this.currentBride = this.navParams.get('currentBride');
     console.log(this.currentBride);
@@ -33,6 +33,26 @@ export class LeadPage {
   }
 
   onLeadOkClick($event){
+    
+    if(!this.bidWinner){
+      this.showLeadAlert('Error', 'Please Select Bid Winner');
+      return;
+    }
+    if(!this.call){
+      this.showLeadAlert('Error', 'Please Select Call');
+      return;
+    }
+    if (!this.oppositTrick){
+      this.showLeadAlert('Error', 'Please Input Call Trick Count');
+      return;
+    }
+    if (!this.callTrickNumber) {
+      this.showLeadAlert('Error', 'Please Input Call Trick Count');
+      return;
+    }
+    if (!this.honers) {
+      this.honers = 0;
+    }
 
     this.lead =  {
       bridgeId: '',
@@ -57,6 +77,15 @@ export class LeadPage {
     this.db.mapLeadToBridge(this.lead);
     console.log(this.lead);
     this.navCtrl.pop();
+  }
+
+  showLeadAlert(title, message){
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 
   calculateLead(){
