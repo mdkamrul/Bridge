@@ -1,6 +1,8 @@
 {
   "name": "Bridge",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular",
   "id": "51a5c0a6"
 }

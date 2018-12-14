@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-
+import { Db } from '../../app/db/Db';
+import { SQLiteObject } from '@ionic-native/sqlite';
 
 @Component({
   selector: 'page-home',
@@ -13,7 +13,9 @@ export class HomePage {
   gameName = '';
   items: Array<any>;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private storage: Storage) {
+  query: SQLiteObject;
+
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db) {
     this.gameNameDialog();
     this.items = [];
   }
@@ -61,6 +63,8 @@ export class HomePage {
           text: 'Ok',
           handler: data => {
             this.items.push(data);
+            this.query.transaction((tx : any)=>{
+            });
           }
         }
       ]
@@ -90,8 +94,7 @@ export class HomePage {
           handler: data => {
             data.startTime = new Date();
             this.gameName = data.gameName;
-            console.log(data);
-            this.storage.set(data.gameName, data);
+            this.db.bridgeList.push(data);
           }
         }
       ]
