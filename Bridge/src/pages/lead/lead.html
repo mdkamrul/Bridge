@@ -10,14 +10,14 @@
 <ion-content>
   <ion-item>
     <ion-label>Bid Winner</ion-label>
-    <ion-select interface="popover">
+    <ion-select interface="popover" [(ngModel)] = "bidWinner">
       <ion-option value="we">We</ion-option>
       <ion-option value="They">They</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Call</ion-label>
-    <ion-select interface="popover">
+    <ion-select interface="popover" [(ngModel)] = "call">
       <ion-option value="10">No Trump</ion-option>
       <ion-option value="9">Spades</ion-option>
       <ion-option value="9">Hearts</ion-option>
@@ -26,12 +26,12 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label>Double</ion-label>
-    <ion-toggle></ion-toggle>
+    <ion-label >Double</ion-label>
+    <ion-toggle [(ngModel)] = "isDouble"></ion-toggle>
   </ion-item>
   <ion-item>
     <ion-label color="primary" floating>Trick Win Opposit</ion-label>
-    <ion-input type="number"></ion-input>
+    <ion-input type="number" [(ngModel)] = "trickNumber"></ion-input>
   </ion-item>
-  <button ion-button full>Ok</button>
+  <button ion-button full (click) = "onLeadOkClick($event)">Ok</button>
 </ion-content>

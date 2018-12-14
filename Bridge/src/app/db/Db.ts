@@ -11,7 +11,7 @@ export class Db{
     query: SQLiteObject;
 
      bridgeList = [];
-     leadMap = new Map();
+     leadMap = [];
 
      playingBrige = null;
 
@@ -29,16 +29,19 @@ export class Db{
         this.nextBridgeId +=1;
     }
 
-     getBridgLeadList(key){
-         var leadList = this.leadMap.get(key);
-         if(leadList == null){
-             leadList = [];
+     getBridgLeadList(bridgeId){
+         var leadList = [];
+         for(var i = 0; i < this.leadMap.length; i ++){
+             var lead = this.leadMap[i];
+             if (lead.bridgeId = bridgeId){
+                 leadList.push(lead);
+             }
          }
          return leadList;
     }
 
-     setValueToLeadMap(key, value){
-        this.leadMap.set(key, value);
+     mapLeadToBridge(lead){
+         this.leadMap.push(lead);
     }
 
 

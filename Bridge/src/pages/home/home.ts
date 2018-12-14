@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Db } from '../../app/db/Db';
 import { LeadPage } from '../lead/lead';
+import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -12,9 +13,9 @@ export class NewGamePage {
 
   gameName = '';
   items: Array<any>;
-  currentBride = null;
+  currentBride : any;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db, private events : Events) {
     if (this.currentBride == null){
       this.gameNameDialog();
       this.items = [];
@@ -22,7 +23,14 @@ export class NewGamePage {
     else{
       this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
     }
-    
+  }
+  ionViewWillUnload() {
+    this.events.unsubscribe('lead');
+  }
+  ionViewDidEnter(){
+    if (this.currentBride != null){
+      this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
+    }
     
   }
 
@@ -30,7 +38,6 @@ export class NewGamePage {
     this.navCtrl.push(LeadPage,{
       currentBride: this.currentBride
     });
-    //this.newLeadDialog();
   }
 
   onGameResultBtnClick(){
@@ -69,19 +76,9 @@ export class NewGamePage {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Ok',
           role: 'cancel',
           handler: data => {
-            
-          }
-        },
-        {
-          text: 'Ok',
-          handler: data => {
-            this.items.push(data);
-            this.db.setValueToLeadMap(this.currentBride.bridgeId, data);
-            console.log(this.db.getBridgLeadList(this.currentBride.bridgeId));
-            this.items.push(data);
           }
         }
       ]
