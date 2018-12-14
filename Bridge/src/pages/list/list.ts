@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Db } from '../../app/db/Db';
+import { NewGamePage } from '../home/home';
 
 @Component({
   selector: 'page-list',
@@ -29,8 +30,8 @@ export class ListPage {
 
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
+    this.navCtrl.push(NewGamePage, {
+      listBridge: item
     });
   }
 }

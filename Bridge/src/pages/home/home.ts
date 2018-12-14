@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Db } from '../../app/db/Db';
 import { LeadPage } from '../lead/lead';
@@ -14,7 +14,11 @@ export class NewGamePage {
   items: Array<any>;
   currentBride : any;
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController,private db : Db) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private db: Db, public navParams: NavParams) {
+    var listBridge = this.navParams.get('listBridge');
+    if (listBridge != null) {
+      this.currentBride = listBridge;
+    }
     if (this.currentBride == null){
       this.gameNameDialog();
       this.items = [];
