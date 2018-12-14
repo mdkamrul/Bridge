@@ -21,6 +21,8 @@ export class LeadPage {
   bridgePoint = null
   callTrickNumber = null;
   honers = null;
+  lsPoint = null;
+  gsPoint = null;
 
   lead : any;
 
@@ -52,6 +54,10 @@ export class LeadPage {
     }
     if (!this.honers) {
       this.honers = 0;
+    }
+    if(this.lsPoint && this.gsPoint){
+      this.showLeadAlert('Error', 'LS and GS must not present in same lead.');
+      return;
     }
 
     this.lead =  {

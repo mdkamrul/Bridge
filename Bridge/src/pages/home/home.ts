@@ -14,6 +14,9 @@ export class NewGamePage {
   items: Array<any>;
   currentBride : any;
 
+  weLead = [];
+  theyLead = [];
+
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private db: Db, public navParams: NavParams) {
     var listBridge = this.navParams.get('listBridge');
     if (listBridge != null) {
@@ -26,11 +29,13 @@ export class NewGamePage {
     else{
       this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
     }
+    this.splitLead();
   }
 
   ionViewDidEnter(){
     if (this.currentBride != null){
       this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
+      this.splitLead();
     }
     
   }
@@ -47,6 +52,22 @@ export class NewGamePage {
 
   onLeadItemClick($event, item){
     console.log(item);
+  }
+
+  splitLead(){
+    this.weLead = [];
+    this.theyLead = [];
+    for(var i = 0; i < this.items.length; i++){
+      var lead = this.items[i];
+      if (lead.bidWinner == 'We'){
+        this.weLead.push(lead);
+      }
+      else{
+        this.theyLead.push(lead);
+      }
+    }
+    console.log(this.weLead);
+    console.log(this.theyLead);
   }
 
   showResult(){

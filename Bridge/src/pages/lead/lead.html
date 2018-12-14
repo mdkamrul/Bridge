@@ -11,7 +11,7 @@
   <ion-item>
     <ion-label>Bid Winner</ion-label>
     <ion-select interface="popover" [(ngModel)] = "bidWinner">
-      <ion-option value="we">We</ion-option>
+      <ion-option value="We">We</ion-option>
       <ion-option value="They">They</ion-option>
     </ion-select>
   </ion-item>
@@ -40,6 +40,14 @@
   <ion-item>
     <ion-label color="primary" floating>Honers</ion-label>
     <ion-input type="number" [(ngModel)]="honers"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>LS</ion-label>
+    <ion-input type="number" [(ngModel)]="lsPoint"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>GS</ion-label>
+    <ion-input type="number" [(ngModel)]="gsPoint"></ion-input>
   </ion-item>
   <button ion-button full (click) = "onLeadOkClick($event)">Ok</button>
 </ion-content>
