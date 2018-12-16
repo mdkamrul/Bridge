@@ -20,7 +20,8 @@ export class LeadPage {
   oppositTrick = null;
   bridgePoint = null
   callTrickNumber = null;
-  honers = null;
+  weHoners = null;
+  theyHoners = null;
   lsPoint = null;
   gsPoint = null;
   leadNumber = 1;
@@ -30,7 +31,7 @@ export class LeadPage {
   lead : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private storage: Storage, private db: Db, private alertCtrl: AlertController) {
+     private db: Db, private alertCtrl: AlertController) {
 
     this.currentBride = this.navParams.get('currentBride');
     console.log(this.currentBride);
@@ -57,8 +58,9 @@ export class LeadPage {
       this.showLeadAlert('Error', 'Please Input Call Trick Count');
       return;
     }
-    if (!this.honers) {
-      this.honers = 0;
+    if (this.weHoners && this.theyHoners) {
+      this.showLeadAlert('Error', 'Both Honers must not present in same lead.');
+      return;
     }
     if(this.lsPoint && this.gsPoint){
       this.showLeadAlert('Error', 'LS and GS must not present in same lead.');
@@ -70,18 +72,28 @@ export class LeadPage {
       bidWinner: this.bidWinner,
       call: parseInt(this.call),
       isDouble: this.isDouble,
-      oppositTrick: parseInt(this.oppositTrick),
+      oppositTrick: this.appParseInt(this.oppositTrick),
       isGame : false,
-      gamePoint : null,
-      honers: parseInt(this.honers),
-      isRuff : false,
-      lsPoint : null,
-      gsPoint : null,
-      bridgePoint : null,
-      callTrickNumber: parseInt(this.callTrickNumber),
-      shortPoint : null,
-      play : null,
-      leadNumber : this.leadNumber
+      weGamePoint : null,
+      theyGamePoint : null,
+      weHoners: this.appParseInt(this.weHoners),
+      theyHoners: this.appParseInt(this.theyHoners),
+      weRuff : false,
+      theyRuff : false,
+      weLsPoint : null,
+      theyLsPoint : null,
+      weGsPoint : null,
+      theyGsPoint : null,
+      weBridgePoint : null,/* if no one call */
+      theyBridgePoint : null,
+      callTrickNumber: this.appParseInt(this.callTrickNumber),
+      weShortPoint : null,
+      theyShortPoint : null,
+      wePlay : null,
+      theyPlay : null,
+      leadNumber : this.leadNumber,
+      weDisplay : null,
+      theyDisplay : null
     };
     this.calculateLead();
     this.lead.bridgeId = this.currentBride.bridgeId;
@@ -101,6 +113,7 @@ export class LeadPage {
   }
 
   calculateLead(){
+    var bidWenner = this.lead.bidWinner;
     var bridgeCallNumber = this.lead.callTrickNumber + this.lead.oppositTrick;
     var difTrick = 7 - bridgeCallNumber;
     if (difTrick >= 0){
@@ -111,10 +124,10 @@ export class LeadPage {
       }
       if (bridgePoint >= 30){
         this.lead.isGame = true;
-        this.lead.gamePoint = bridgePoint;
+        this.setGamePoint(bidWenner, bridgePoint);
       }
       else {
-        this.lead.play = bridgePoint;
+        this.setPlay(bidWenner, bridgePoint);
       }
     }
     else{
@@ -122,8 +135,61 @@ export class LeadPage {
       if (this.lead.isDouble) {
         shortMultiply = 100;
       }
-      this.lead.shortPoint = (difTrick * -1) * shortMultiply;
+      var short = (difTrick * -1) * shortMultiply;
+      this.setShort(bidWenner, short);
     }
+    this.lead.weDisplay = 'Test Display We';
+    this.lead.theyDisplay = 'Test Display They';
+    console.log(this.lead);
+  }
+  setPlay(bidWinner, play){
+    if(this.bidWinner == 'We'){
+      this.lead.wePlay = play;
+    }
+    else{
+      this.lead.theyPlay = play;
+    }
+  }
+  setShort(bidWinner, short){
+    if (this.bidWinner == 'We') {
+      this.lead.theyShortPoint = short;
+    }
+    else {
+      this.lead.weShortPoint = short;
+    }
+  }
+
+  setLs(bidWinner, point) {
+    if (this.bidWinner == 'We') {
+      this.lead.weLsPoint = point;
+    }
+    else {
+      this.lead.theyLsPoint = point;
+    }
+  }
+
+  setGs(bidWinner, point) {
+    if (this.bidWinner == 'We') {
+      this.lead.weGsPoint = point;
+    }
+    else {
+      this.lead.theyGsPoint = point;
+    }
+  }
+  setGamePoint(bidWinner, point) {
+    if (this.bidWinner == 'We') {
+      this.lead.weGamePoint = point;
+    }
+    else {
+      this.lead.theyGamePoint = point;
+    }
+  }
+
+  appParseInt(point){
+    if(null == point){
+      return null;
+    }
+    return parseInt(point);
   }
 
 }

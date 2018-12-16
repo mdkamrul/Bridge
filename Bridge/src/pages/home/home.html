@@ -11,10 +11,42 @@
   <h3>{{gameName}}</h3>
   <button ion-button color="secondary" (click) = "onGameResultBtnClick()">Result</button>
   <button ion-button color="secondary" (click)="onNewLeadClick()">New Lead</button>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="onLeadItemClick($event, item)">
-      {{item.call}}
-    </button>
+
+
+    <div class="row">
+      <div class='col col-5'>
+        We
+      </div>
+      <div class='col'>
+        <span class='lead-color'>Lead</span>
+      </div>
+      <div class='col'>
+        They
+      </div>
+    </div>
+    <div class="row" *ngFor="let item of items">
+      <div class='col'>
+      {{item.weDisplay}}
+      </div>
+      <div class='col'>
+        <span class='lead-color'>{{item.leadNumber}}</span>
+      </div>
+      <div class='col'>
+        {{item.theyDisplay}}
+      </div>
+    </div>
+    <ion-list>
+    <!-- <button ion-item *ngFor="let item of items" (click)="onLeadItemClick($event, item)">
+      <div item-start>
+        {{item.weDisplay}}
+      </div>
+      <div class='leadnumber' item-content>
+        {{item.leadNumber}}
+      </div>
+      <div class="item-note" item-end>
+        {{item.theyDisplay}}
+      </div>
+    </button> -->
   </ion-list>
   
 </ion-content>

@@ -29,7 +29,7 @@ export class NewGamePage {
     else{
       this.items = this.db.getBridgLeadList(this.currentBride.bridgeId);
     }
-    this.splitLead();
+    //this.splitLead();
   }
 
   ionViewDidEnter(){
